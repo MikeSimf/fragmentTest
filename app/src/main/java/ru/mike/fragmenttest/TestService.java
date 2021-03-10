@@ -7,11 +7,6 @@ import android.os.IBinder;
 
 public class TestService extends Service {
 
-    MyBinder binder = new MyBinder();
-
-    public TestService() {
-    }
-
     @Override
     public IBinder onBind(Intent intent) {
         return new MyBinder();

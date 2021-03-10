@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String BROADCAST_ACTION = "ru.mike.fragmentTest.servicebroadcast";
+    public static final String BROADCAST_ACTION = "ru.mike.fragmentTest.serviceBroadcast";
     public static final String PARAM_TEXT = "text";
 
 
