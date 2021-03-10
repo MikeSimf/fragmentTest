@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">fragmentTest</string>
+    <string name="btn_caption">SEND</string>
+    <string name="et_text">Input text for sending</string>
+</resources>
