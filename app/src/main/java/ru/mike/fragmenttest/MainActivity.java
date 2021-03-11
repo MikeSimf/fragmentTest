@@ -24,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
     Button btn;
     TestFragment fragment;
     BroadcastReceiver br;
-    ServiceConnection serviceConnection;
-    TestService testService;
     Intent intent;
-    Boolean bound;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +48,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
         registerReceiver(br, intentFilter);
 
-        // запускаем сервис
-        intent = new Intent(this, TestService.class);
-        startService(intent);
-
-        serviceConnection = new ServiceConnection() {
-            public void onServiceConnected(ComponentName name, IBinder binder) {
-                testService = ((TestService.MyBinder) binder).getService();
-                bound = true;
-            }
-
-            public void onServiceDisconnected(ComponentName name) {
-                bound = false;
-            }
-        };
-    }
+     }
 
     @Override
     protected void onStart() {
@@ -74,20 +58,12 @@ public class MainActivity extends AppCompatActivity {
         btn = (Button) findViewById(R.id.btn);
 
         btn.setOnClickListener((View view) -> {
-            if (!bound) return;
-            testService.parseText(et.getText().toString());
+            // запускаем сервис и передаем текст по кнопке
+            intent = new Intent(this, TestService.class).putExtra(PARAM_TEXT, et.getText().toString());
+            startService(intent);
         });
 
-        bindService(intent, serviceConnection, 0);
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (!bound) return;
-        unbindService(serviceConnection);
-        bound = false;
-        stopService(intent);
     }
 
     @Override

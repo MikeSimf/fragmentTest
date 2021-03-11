@@ -6,16 +6,18 @@ import android.os.Binder;
 import android.os.IBinder;
 
 public class TestService extends Service {
+    public static final String BROADCAST_ACTION = "ru.mike.fragmentTest.serviceBroadcast";
+    public static final String PARAM_TEXT = "text";
 
     @Override
     public IBinder onBind(Intent intent) {
         return new MyBinder();
     }
 
-    void parseText(String text) {
-        Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
-        intent.putExtra(MainActivity.PARAM_TEXT, text);
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         sendBroadcast(intent);
+        return super.onStartCommand(intent, flags, startId);
     }
 
     class MyBinder extends Binder {
