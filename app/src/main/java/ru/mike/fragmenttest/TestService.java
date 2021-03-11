@@ -16,7 +16,10 @@ public class TestService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        sendBroadcast(intent);
+        Intent broadcastIntent = new Intent(BROADCAST_ACTION);
+        String text = intent.getStringExtra(PARAM_TEXT);
+        broadcastIntent.putExtra(PARAM_TEXT, text);
+        sendBroadcast(broadcastIntent);
         return super.onStartCommand(intent, flags, startId);
     }
 
