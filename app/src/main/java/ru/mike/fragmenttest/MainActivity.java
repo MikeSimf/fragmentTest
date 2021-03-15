@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         TestFragment fragment = TestFragment.newInstance();
         fragmentTransaction.add(R.id.main, fragment);
         fragmentTransaction.commit();
-
      }
 
 }

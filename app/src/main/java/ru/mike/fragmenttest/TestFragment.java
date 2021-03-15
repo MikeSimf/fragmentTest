@@ -29,19 +29,18 @@ public class TestFragment extends Fragment {
         return new TestFragment();
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_layout, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         tv = (TextView) getActivity().findViewById(R.id.tv);
         et = (EditText) getActivity().findViewById(R.id.et);
         btn = (Button) getActivity().findViewById(R.id.btn);
-
-         btn.setOnClickListener((View view) -> {
-             // запускаем сервис и передаем текст по кнопке
-             Intent intent = new Intent(getActivity(), TestService.class).putExtra(PARAM_TEXT, et.getText().toString());
-             getActivity().startService(intent);
-         });
 
         // создаем BroadcastReceiver
         br = new BroadcastReceiver() {
@@ -50,10 +49,13 @@ public class TestFragment extends Fragment {
                 tv.setText(text);
             }
         };
-
         IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
         getActivity().registerReceiver(br, intentFilter);
 
-        return inflater.inflate(R.layout.fragment_layout, container, false);
+        // по кнопке запускаем сервис и передаем текст
+        btn.setOnClickListener((View view) -> {
+            Intent intent = new Intent(getActivity(), TestService.class).putExtra(PARAM_TEXT, et.getText().toString());
+            getActivity().startService(intent);
+        });
     }
 }
