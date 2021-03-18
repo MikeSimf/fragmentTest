@@ -58,4 +58,10 @@ public class TestFragment extends Fragment {
             getActivity().startService(intent);
         });
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().unregisterReceiver(br);
+    }
 }
